@@ -1,7 +1,7 @@
 package com.dream.seata.order.api;
 
-import com.dream.seata.order.input.OrderInfoInPut;
-import com.dream.seata.order.output.OrderInfoOutPut;
+import com.dream.seata.order.api.input.OrderInfoInPut;
+import com.dream.seata.order.api.output.OrderInfoOutPut;
 import org.springframework.web.bind.annotation.*;
 
 /**

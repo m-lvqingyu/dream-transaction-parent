@@ -1,7 +1,7 @@
 package com.dream.seata.order.server.service.impl;
 
-import com.dream.seata.order.input.OrderInfoInPut;
-import com.dream.seata.order.output.OrderInfoOutPut;
+import com.dream.seata.order.api.input.OrderInfoInPut;
+import com.dream.seata.order.api.output.OrderInfoOutPut;
 import com.dream.seata.order.server.mapper.TOrderInfoMapper;
 import com.dream.seata.order.server.model.TOrderInfo;
 import com.dream.seata.order.server.model.TOrderInfoExample;

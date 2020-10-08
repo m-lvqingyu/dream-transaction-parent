@@ -1,8 +1,8 @@
 package com.dream.seata.order.server.controller;
 
 import com.dream.seata.order.api.TOrderInfoApi;
-import com.dream.seata.order.input.OrderInfoInPut;
-import com.dream.seata.order.output.OrderInfoOutPut;
+import com.dream.seata.order.api.input.OrderInfoInPut;
+import com.dream.seata.order.api.output.OrderInfoOutPut;
 import com.dream.seata.order.server.service.TOrderInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

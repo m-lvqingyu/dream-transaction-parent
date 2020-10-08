@@ -1,4 +1,4 @@
-package com.dream.seata.order.output;
+package com.dream.seata.order.api.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

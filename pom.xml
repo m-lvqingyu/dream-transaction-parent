@@ -21,8 +21,8 @@
         <module>transaction-user-server</module>
         <module>transaction-user-api</module>
         <module>transaction-user-client</module>
-        <module>transaction-api-getway</module>
         <module>transaction-registry-server</module>
+        <module>transaction-gateway-api</module>
     </modules>
     <packaging>pom</packaging>
 
