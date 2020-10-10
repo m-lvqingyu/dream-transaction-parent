@@ -145,6 +145,7 @@
                 <artifactId>apollo-client</artifactId>
                 <version>${apollo.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
