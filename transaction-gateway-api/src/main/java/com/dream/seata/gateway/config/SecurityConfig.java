@@ -1,17 +1,15 @@
-package com.dream.seata.gateway.config;/**
- * @description: <pre>
- * </pre>
- * @author: Lvqingyu
- * @create: 2020/10/08 18:34
- */
+package com.dream.seata.gateway.config;
 
-/**
- *
- *
- *@description:
- *@author: Lv.QingYu
- *@time: 2020/10/8 18:34
- *
- */
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
 public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }
