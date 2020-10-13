@@ -2,7 +2,7 @@ package com.dream.seata.gateway.component;
 
 import cn.hutool.core.convert.Convert;
 import com.dream.seata.core.constant.AuthConstants;
-import com.dream.seata.gateway.config.WhiteListConfig;
+import com.dream.seata.gateway.config.authorization.WhiteListConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
@@ -23,6 +23,8 @@ import reactor.core.publisher.Mono;
 import java.util.*;
 
 /**
+ * @description 鉴权管理器:用于判断是否有资源的访问权限
+ *
  * @author Lv.QingYu
  */
 @Slf4j
@@ -33,6 +35,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
     private WhiteListConfig whiteListConfig;
     @Autowired
     private RedissonClient redissonClient;
+
     private static final AuthorizationDecision SUCCESS = new AuthorizationDecision(true);
     private static final AuthorizationDecision FAIL = new AuthorizationDecision(false);
 
@@ -76,14 +79,15 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         }
 
         Mono<AuthorizationDecision> authorizationDecisionMono = mono
+                // isAuthenticated 当前用户是否已经通过认证（true:是 | false:否）
                 .filter(Authentication::isAuthenticated)
+                // getAuthorities 返回当前Authentication对象拥有的权限,即当前用户拥有的权限
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
-                .any(roleId -> {
-                    return authorities.contains(roleId);
-                })
+                .any(roleId ->  authorities.contains(roleId))
                 .map(AuthorizationDecision::new)
-                .defaultIfEmpty(new AuthorizationDecision(false));
+                // 如果当前对象为空，设置默认的defaultValue
+                .defaultIfEmpty(FAIL);
         return authorizationDecisionMono;
     }
 

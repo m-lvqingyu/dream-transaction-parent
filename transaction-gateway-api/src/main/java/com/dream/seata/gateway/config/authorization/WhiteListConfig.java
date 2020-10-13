@@ -1,4 +1,4 @@
-package com.dream.seata.gateway.config;
+package com.dream.seata.gateway.config.authorization;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Lv.QingYu
- * @description: 白名单（无需权限校验的url）
+ * @description 白名单（无需权限校验的url）
  */
 @Data
 @Configuration
