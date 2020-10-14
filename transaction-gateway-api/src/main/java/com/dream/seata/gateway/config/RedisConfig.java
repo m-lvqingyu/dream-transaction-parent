@@ -1,4 +1,4 @@
-package com.dream.seata.gateway.config.redis;
+package com.dream.seata.gateway.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -8,14 +8,22 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Lv.QingYu
+ * @description Redis相关配置
  */
 @Configuration
-public class RedissonConfig {
+public class RedisConfig {
 
+    /**
+     * 单机模式
+     *
+     * @return
+     */
     @Bean
-    public RedissonClient redissonClient(){
+    public RedissonClient redissonClient() {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://localhost:6379").setPassword("root");
+        config.useSingleServer()
+                .setAddress("redis://localhost:6379")
+                .setPassword("root");
         return Redisson.create(config);
     }
 
