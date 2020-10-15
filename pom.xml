@@ -24,6 +24,9 @@
         <module>transaction-registry-server</module>
         <module>transaction-gateway-api</module>
         <module>transaction-core</module>
+        <module>transaction-auth-api</module>
+        <module>transaction-auth-client</module>
+        <module>transaction-auth-server</module>
     </modules>
     <packaging>pom</packaging>
 
