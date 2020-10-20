@@ -25,7 +25,7 @@
 
         <dependency>
             <groupId>com.dream.start</groupId>
-            <artifactId>transaction-order-client</artifactId>
+            <artifactId>transaction-order-api</artifactId>
             <version>${parent.version}</version>
         </dependency>
 

@@ -17,7 +17,6 @@
     <modules>
         <module>transaction-order-server</module>
         <module>transaction-order-api</module>
-        <module>transaction-order-client</module>
         <module>transaction-user-server</module>
         <module>transaction-user-api</module>
         <module>transaction-registry-server</module>

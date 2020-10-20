@@ -2,6 +2,7 @@ package com.dream.seata.order.api;
 
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RequestMapping("/order")
+@FeignClient(value = "TRANSACTION-ORDER-SERVER")
 public interface TOrderInfoApi {
 
     /**
