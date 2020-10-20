@@ -20,12 +20,10 @@
         <module>transaction-order-client</module>
         <module>transaction-user-server</module>
         <module>transaction-user-api</module>
-        <module>transaction-user-client</module>
         <module>transaction-registry-server</module>
         <module>transaction-gateway-api</module>
         <module>transaction-core</module>
         <module>transaction-auth-api</module>
-        <module>transaction-auth-client</module>
         <module>transaction-auth-server</module>
     </modules>
     <packaging>pom</packaging>
@@ -34,7 +32,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <druid.version>1.1.24</druid.version>
+        <druid.version>1.1.22</druid.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <mysql.version>8.0.20</mysql.version>
         <lombok.version>1.18.12</lombok.version>
