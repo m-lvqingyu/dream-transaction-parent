@@ -13,6 +13,13 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--路由熔断 start-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--路由熔断 end-->
+
         <dependency>
             <groupId>com.dream.start</groupId>
             <artifactId>transaction-core</artifactId>
