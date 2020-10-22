@@ -34,6 +34,14 @@ spring:
           uri: lb://transaction-user-server
           predicates:
             - Path=/sys/**
+            # 2020-10-22 21:00:00之后，将/sys/**请求路由至transaction-user-server服务
+            #- After=2020-10-22T21:00:00.000+08:00
+            # 2020-10-22 20:59:59之前，将/sys/**请求路由至transaction-user-server服务
+            #- Before=2020-10-22T20:59:59.000+08:00
+            # 在2020-01-01 00:00:00 - 2020-12-30 23:59:59之间，将/sys/**请求路由至transaction-user-server服务
+            #- Between=2020-01-01T00:00:00.000+08:00,2020-12-30T23:59:59.000+08:00
+            # Header存在名为payload，并且值为数字的/sys/**请求会被路由至transaction-user-server服务
+            #- Header=payload,\d+
           filters:
             - StripPrefix=1
             - name: Hystrix

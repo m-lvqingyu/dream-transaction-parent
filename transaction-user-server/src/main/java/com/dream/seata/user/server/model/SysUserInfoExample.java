@@ -185,6 +185,76 @@ public class SysUserInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andUserUidIsNull() {
+            addCriterion("user_uid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidIsNotNull() {
+            addCriterion("user_uid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidEqualTo(String value) {
+            addCriterion("user_uid =", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidNotEqualTo(String value) {
+            addCriterion("user_uid <>", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidGreaterThan(String value) {
+            addCriterion("user_uid >", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidGreaterThanOrEqualTo(String value) {
+            addCriterion("user_uid >=", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidLessThan(String value) {
+            addCriterion("user_uid <", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidLessThanOrEqualTo(String value) {
+            addCriterion("user_uid <=", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidLike(String value) {
+            addCriterion("user_uid like", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidNotLike(String value) {
+            addCriterion("user_uid not like", value, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidIn(List<String> values) {
+            addCriterion("user_uid in", values, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidNotIn(List<String> values) {
+            addCriterion("user_uid not in", values, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidBetween(String value1, String value2) {
+            addCriterion("user_uid between", value1, value2, "userUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserUidNotBetween(String value1, String value2) {
+            addCriterion("user_uid not between", value1, value2, "userUid");
+            return (Criteria) this;
+        }
+
         public Criteria andUsernameIsNull() {
             addCriterion("username is null");
             return (Criteria) this;

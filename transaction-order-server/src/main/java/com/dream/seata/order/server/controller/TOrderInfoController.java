@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @description: <pre>
  * </pre>
- * @author: Lvqingyu
+ * @author: Lv.QingYu
  * @create: 2020/10/06 22:52
  */
 

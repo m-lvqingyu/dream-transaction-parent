@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @author Lv.QingYu
  */
@@ -13,5 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserInfoInPut {
 
-    private String username;
+    private String userUid;
+
+    private BigDecimal amount;
 }

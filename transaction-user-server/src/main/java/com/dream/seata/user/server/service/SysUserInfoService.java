@@ -1,6 +1,10 @@
 package com.dream.seata.user.server.service;
 
+import com.dream.seata.core.result.Result;
+import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import com.dream.seata.user.api.output.UserInfoOutPut;
+
+import java.math.BigDecimal;
 
 /**
  * @author Lv.QingYu
@@ -22,4 +26,21 @@ public interface SysUserInfoService {
      * @return
      */
     UserInfoOutPut loginUserInfoDetails(int userId);
+
+    /**
+     * 根据UID，获取用户账户信息
+     *
+     * @param userUid 用户UId
+     * @return
+     */
+    UserInfoAmountOutPut userInfoAmountDetailsByUid(String userUid);
+
+    /**
+     * 订单结算，扣减账户金额
+     *
+     * @param userUid
+     * @param deductionAmount
+     * @return
+     */
+    Result userInfoSettlement(String userUid, BigDecimal deductionAmount);
 }

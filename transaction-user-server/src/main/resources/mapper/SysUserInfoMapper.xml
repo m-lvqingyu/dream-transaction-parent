@@ -3,16 +3,17 @@
 <mapper namespace="com.dream.seata.user.server.mapper.SysUserInfoMapper">
   <resultMap id="BaseResultMap" type="com.dream.seata.user.server.model.SysUserInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_uid" jdbcType="VARCHAR" property="userUid" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="dept_id" jdbcType="INTEGER" property="deptId" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
@@ -78,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, nickname, gender, `password`, salt, dept_id, deleted, avatar, mobile, 
-    `status`, email, create_time, create_by, update_time, update_by
+    id, user_uid, username, nickname, gender, `password`, salt, dept_id, deleted, avatar, 
+    mobile, `status`, email, create_time, create_by, update_time, update_by
   </sql>
   <select id="selectByExample" parameterType="com.dream.seata.user.server.model.SysUserInfoExample" resultMap="BaseResultMap">
     select
@@ -120,22 +121,25 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dream.seata.user.server.model.SysUserInfo" useGeneratedKeys="true">
-    insert into sys_user_info (username, nickname, gender, 
-      `password`, salt, dept_id, 
-      deleted, avatar, mobile, 
-      `status`, email, create_time, 
-      create_by, update_time, update_by
-      )
-    values (#{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, 
-      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{deptId,jdbcType=INTEGER}, 
-      #{deleted,jdbcType=BIT}, #{avatar,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}
-      )
+    insert into sys_user_info (user_uid, username, nickname, 
+      gender, `password`, salt, 
+      dept_id, deleted, avatar, 
+      mobile, `status`, email, 
+      create_time, create_by, update_time, 
+      update_by)
+    values (#{userUid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, #{avatar,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{email,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dream.seata.user.server.model.SysUserInfo" useGeneratedKeys="true">
     insert into sys_user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userUid != null">
+        user_uid,
+      </if>
       <if test="username != null">
         username,
       </if>
@@ -183,6 +187,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userUid != null">
+        #{userUid,jdbcType=VARCHAR},
+      </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
@@ -190,7 +197,7 @@
         #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=BIT},
+        #{gender,jdbcType=TINYINT},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -202,7 +209,7 @@
         #{deptId,jdbcType=INTEGER},
       </if>
       <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
+        #{deleted,jdbcType=TINYINT},
       </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
@@ -211,7 +218,7 @@
         #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -242,6 +249,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.userUid != null">
+        user_uid = #{record.userUid,jdbcType=VARCHAR},
+      </if>
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
@@ -249,7 +259,7 @@
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
       <if test="record.gender != null">
-        gender = #{record.gender,jdbcType=BIT},
+        gender = #{record.gender,jdbcType=TINYINT},
       </if>
       <if test="record.password != null">
         `password` = #{record.password,jdbcType=VARCHAR},
@@ -261,7 +271,7 @@
         dept_id = #{record.deptId,jdbcType=INTEGER},
       </if>
       <if test="record.deleted != null">
-        deleted = #{record.deleted,jdbcType=BIT},
+        deleted = #{record.deleted,jdbcType=TINYINT},
       </if>
       <if test="record.avatar != null">
         avatar = #{record.avatar,jdbcType=VARCHAR},
@@ -270,7 +280,7 @@
         mobile = #{record.mobile,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
-        `status` = #{record.status,jdbcType=BIT},
+        `status` = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
@@ -295,16 +305,17 @@
   <update id="updateByExample" parameterType="map">
     update sys_user_info
     set id = #{record.id,jdbcType=INTEGER},
+      user_uid = #{record.userUid,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
-      gender = #{record.gender,jdbcType=BIT},
+      gender = #{record.gender,jdbcType=TINYINT},
       `password` = #{record.password,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR},
       dept_id = #{record.deptId,jdbcType=INTEGER},
-      deleted = #{record.deleted,jdbcType=BIT},
+      deleted = #{record.deleted,jdbcType=TINYINT},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=BIT},
+      `status` = #{record.status,jdbcType=TINYINT},
       email = #{record.email,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -317,6 +328,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dream.seata.user.server.model.SysUserInfo">
     update sys_user_info
     <set>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=VARCHAR},
+      </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -324,7 +338,7 @@
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        gender = #{gender,jdbcType=BIT},
+        gender = #{gender,jdbcType=TINYINT},
       </if>
       <if test="password != null">
         `password` = #{password,jdbcType=VARCHAR},
@@ -336,7 +350,7 @@
         dept_id = #{deptId,jdbcType=INTEGER},
       </if>
       <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
+        deleted = #{deleted,jdbcType=TINYINT},
       </if>
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
@@ -345,7 +359,7 @@
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        `status` = #{status,jdbcType=BIT},
+        `status` = #{status,jdbcType=TINYINT},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -367,16 +381,17 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dream.seata.user.server.model.SysUserInfo">
     update sys_user_info
-    set username = #{username,jdbcType=VARCHAR},
+    set user_uid = #{userUid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=BIT},
+      gender = #{gender,jdbcType=TINYINT},
       `password` = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       dept_id = #{deptId,jdbcType=INTEGER},
-      deleted = #{deleted,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=TINYINT},
       avatar = #{avatar,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BIT},
+      `status` = #{status,jdbcType=TINYINT},
       email = #{email,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=VARCHAR},

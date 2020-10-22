@@ -1,21 +1,20 @@
 package com.dream.seata.user.server.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
- * sys_user_info
- *
- * @author
+ * @author 用户信息表
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class SysUserInfo {
     private Integer id;
+
+    /**
+     * 用户唯一Id
+     */
+    private String userUid;
 
     /**
      * 用户名
