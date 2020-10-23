@@ -1,5 +1,6 @@
 package com.dream.seata.order.server.service;
 
+import com.dream.seata.core.result.Result;
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
 
@@ -25,7 +26,7 @@ public interface TOrderInfoService {
      * @param orderInfoInPut
      * @return
      */
-    String createOrderInfo(OrderInfoInPut orderInfoInPut);
+    Result createOrderInfo(OrderInfoInPut orderInfoInPut);
 
 
 }

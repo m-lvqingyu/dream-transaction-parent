@@ -67,7 +67,9 @@ public enum ResultCode implements  IResultCode, Serializable {
     DATABASE_COLUMN_NOT_EXIST("C0312","列不存在"),
     DATABASE_DUPLICATE_COLUMN_NAME("C0321","多表关联中存在多个相同名称的列"),
     DATABASE_DEADLOCK("C0331","数据库死锁"),
-    DATABASE_PRIMARY_KEY_CONFLICT("C0341","主键冲突") ;
+    DATABASE_PRIMARY_KEY_CONFLICT("C0341","主键冲突") ,
+
+    ORDER_CREATE_ERROR("D1000","创建订单失败");
 
     @Override
     public String getCode() {

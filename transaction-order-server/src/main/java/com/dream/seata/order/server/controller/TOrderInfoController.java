@@ -1,5 +1,6 @@
 package com.dream.seata.order.server.controller;
 
+import com.dream.seata.core.result.Result;
 import com.dream.seata.order.api.TOrderInfoApi;
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
@@ -29,7 +30,7 @@ public class TOrderInfoController implements TOrderInfoApi {
     }
 
     @Override
-    public String createOrderInfo(OrderInfoInPut orderInfoInPut) {
+    public Result createOrderInfo(OrderInfoInPut orderInfoInPut) {
         return tOrderInfoService.createOrderInfo(orderInfoInPut);
     }
 }

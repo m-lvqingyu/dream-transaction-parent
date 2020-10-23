@@ -1,5 +1,6 @@
 package com.dream.seata.order.api;
 
+import com.dream.seata.core.result.Result;
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -32,5 +33,5 @@ public interface TOrderInfoApi {
      * @return
      */
     @PostMapping("create")
-    String createOrderInfo(@RequestBody OrderInfoInPut orderInfoInPut);
+    Result createOrderInfo(@RequestBody OrderInfoInPut orderInfoInPut);
 }
