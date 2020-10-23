@@ -16,7 +16,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class OauthUserInfo implements UserDetails {
 
-    private Integer id;
+    private String userUid;
 
     private String username;
 

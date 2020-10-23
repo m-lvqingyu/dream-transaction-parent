@@ -55,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private OauthUserInfo oauthUserInfoConversion(UserInfoOutPut userInfoOutPut){
         OauthUserInfo oauthUserInfo = new OauthUserInfo();
-        oauthUserInfo.setId(userInfoOutPut.getId());
+        oauthUserInfo.setUserUid(userInfoOutPut.getUserUid());
         oauthUserInfo.setUsername(userInfoOutPut.getUsername());
         oauthUserInfo.setPassword(AuthConstants.BCRYPT + userInfoOutPut.getPassword());
         oauthUserInfo.setEnabled(userInfoOutPut.getStatus().equals(UserInfoStatus.EFFECTIVE.getKey()));

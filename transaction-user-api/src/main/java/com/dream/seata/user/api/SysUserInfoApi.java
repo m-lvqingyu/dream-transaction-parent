@@ -37,11 +37,11 @@ public interface SysUserInfoApi {
     /**
      * 根据ID，获取用户信息
      *
-     * @param userId 用户ID
+     * @param userUid 用户UID
      * @return
      */
-    @GetMapping("/userInfoDetailsById/{userId}")
-    UserInfoOutPut userInfoDetailsById(@PathVariable("userId") Integer userId);
+    @GetMapping("/userInfoDetailsByUid/{userUid}")
+    UserInfoOutPut userInfoDetailsByUid(@PathVariable("userUid") String userUid);
 
     /**
      * 根据UID，获取用户账户信息

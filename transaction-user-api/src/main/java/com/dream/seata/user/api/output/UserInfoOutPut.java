@@ -15,9 +15,9 @@ import java.util.List;
 public class UserInfoOutPut {
 
     /**
-     * 用户ID
+     * 用户UID
      */
-    private Integer id;
+    private String userUid;
 
     /**
      * 用户名称

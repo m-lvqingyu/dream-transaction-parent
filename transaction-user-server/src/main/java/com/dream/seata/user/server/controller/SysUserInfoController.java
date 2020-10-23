@@ -36,13 +36,13 @@ public class SysUserInfoController implements SysUserInfoApi {
     public UserInfoOutPut loginUserInfoDetails(HttpServletRequest request) {
         String payload = request.getHeader(AuthConstants.JWT_PAYLOAD_KEY);
         JSONObject jsonObject = JSONUtil.parseObj(payload);
-        Integer userId = jsonObject.getInt("id");
-        return sysUserInfoService.loginUserInfoDetails(userId);
+        String userUid = jsonObject.getStr("id");
+        return sysUserInfoService.loginUserInfoDetails(userUid);
     }
 
     @Override
-    public UserInfoOutPut userInfoDetailsById(Integer userId) {
-        return sysUserInfoService.loginUserInfoDetails(userId);
+    public UserInfoOutPut userInfoDetailsByUid(String userUid) {
+        return sysUserInfoService.loginUserInfoDetails(userUid);
     }
 
     @Override

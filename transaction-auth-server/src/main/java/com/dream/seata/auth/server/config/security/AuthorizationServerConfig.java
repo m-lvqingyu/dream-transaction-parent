@@ -4,9 +4,7 @@ import com.dream.seata.auth.server.model.OauthUserInfo;
 import com.dream.seata.auth.server.service.impl.JdbcClientDetailsServiceImpl;
 import com.dream.seata.auth.server.service.impl.UserDetailsServiceImpl;
 import com.dream.seata.core.constant.AuthConstants;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -110,7 +108,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return (accessToken, authentication) -> {
             Map<String, Object> map = new HashMap<>(2);
             OauthUserInfo user = (OauthUserInfo) authentication.getUserAuthentication().getPrincipal();
-            map.put(AuthConstants.JWT_USER_ID_KEY, user.getId());
+            map.put(AuthConstants.JWT_USER_ID_KEY, user.getUserUid());
             map.put(AuthConstants.JWT_CLIENT_ID_KEY, user.getClientId());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(map);
             return accessToken;

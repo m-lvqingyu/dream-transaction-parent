@@ -68,16 +68,16 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
     }
 
     @Override
-    public UserInfoOutPut loginUserInfoDetails(int userId) {
+    public UserInfoOutPut loginUserInfoDetails(String userUid) {
         SysUserInfoExample userInfoExample = new SysUserInfoExample();
         userInfoExample.createCriteria()
-                .andIdEqualTo(userId)
+                .andUserUidEqualTo(userUid)
                 .andStatusEqualTo(UserInfoStatus.EFFECTIVE.getKey())
                 .andDeletedEqualTo(UserInfoStatus.EFFECTIVE.getKey());
         List<SysUserInfo> userInfoList = sysUserInfoMapper.selectByExample(userInfoExample);
         UserInfoOutPut userInfoOutPut = new UserInfoOutPut();
         if (userInfoList == null || userInfoList.isEmpty()) {
-            log.warn("[transaction-user-server]-根据用户ID：{}未获取到用户信息", userId);
+            log.warn("[transaction-user-server]-根据用户UID：{}未获取到用户信息", userUid);
             return userInfoOutPut;
         }
         SysUserInfo sysUserInfo = userInfoList.get(0);

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-
+/**
+ * @author Lv.QingYu
+ */
 @Component
 @Slf4j
 public class AuthGlobalFilter implements GlobalFilter, Ordered {

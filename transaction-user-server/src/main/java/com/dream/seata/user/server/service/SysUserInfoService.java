@@ -22,10 +22,10 @@ public interface SysUserInfoService {
     /**
      * 根据用户ID，获取当前登录用户信息
      *
-     * @param userId 用户ID
+     * @param userUid 用户UID
      * @return
      */
-    UserInfoOutPut loginUserInfoDetails(int userId);
+    UserInfoOutPut loginUserInfoDetails(String userUid);
 
     /**
      * 根据UID，获取用户账户信息
