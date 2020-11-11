@@ -1,19 +1,26 @@
-package com.dream.seata.order.api.input;
+package com.dream.seata.order.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
- * @description: <pre>
- * </pre>
- * @author: Lvqingyu
- * @create: 2020/10/06 22:44
+ * order_info
+ *
+ * @author
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderInfoInPut {
+public class OrderInfo {
+    private Long id;
+
+    /**
+     * 订单ID
+     */
+    private String orderUid;
 
     /**
      * 预定人ID
@@ -31,8 +38,13 @@ public class OrderInfoInPut {
     private String productUid;
 
     /**
-     * 商品数量
+     * 创建时间
      */
-    private Integer productNum;
+    private Date createTime;
 
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    
 }

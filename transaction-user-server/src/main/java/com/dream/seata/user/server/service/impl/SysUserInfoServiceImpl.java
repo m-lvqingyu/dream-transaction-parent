@@ -1,6 +1,7 @@
 package com.dream.seata.user.server.service.impl;
 
 import com.dream.seata.core.enums.UserInfoStatus;
+import com.dream.seata.core.exception.DreamCoreException;
 import com.dream.seata.core.result.Result;
 import com.dream.seata.core.result.ResultCode;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
@@ -10,6 +11,7 @@ import com.dream.seata.user.server.mapper.SysUserInfoMapper;
 import com.dream.seata.user.server.mapper.SysUserRoleInfoMapper;
 import com.dream.seata.user.server.model.*;
 import com.dream.seata.user.server.service.SysUserInfoService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,19 +102,21 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
     }
 
     @Override
+    @GlobalTransactional
     public Result userInfoSettlement(String userUid, BigDecimal deductionAmount) {
         SysUserAmountInfoExample selectExample = new SysUserAmountInfoExample();
         selectExample.createCriteria().andUserUidEqualTo(userUid);
         List<SysUserAmountInfo> infoList = sysUserAmountInfoMapper.selectByExample(selectExample);
         if (infoList == null || infoList.isEmpty()) {
             log.warn("[订单结算扣减账户金额]-根据用户UID:{}未获取到用户信息", userUid);
-            return Result.custom(ResultCode.USER_ACCOUNT_NOT_EXIST);
+            throw new DreamCoreException(ResultCode.USER_ACCOUNT_NOT_EXIST.getMsg());
+            //return Result.custom(ResultCode.USER_ACCOUNT_NOT_EXIST);
         }
         SysUserAmountInfo sysUserAmountInfo = infoList.get(0);
         BigDecimal mainAmount = sysUserAmountInfo.getMainAmount();
         if (deductionAmount.compareTo(mainAmount) > 0) {
             log.warn("[订单结算扣减账户金额]-用户UID：{}的余额：{}不足，订单金额:{}", userUid, mainAmount, deductionAmount);
-            return Result.custom(ResultCode.USER_ACCOUNT_INSUFFICIENT_BALANCE);
+            throw new DreamCoreException(ResultCode.USER_ACCOUNT_INSUFFICIENT_BALANCE.getMsg());
         }
         Integer version = sysUserAmountInfo.getVersion();
         BigDecimal amount = mainAmount.subtract(deductionAmount);
@@ -128,7 +132,7 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
         if (count > 0) {
             return Result.custom(ResultCode.SUCCESS);
         }
-        return Result.custom(ResultCode.USER_ACCOUNT_UPDATE_ERROR);
+        throw new DreamCoreException(ResultCode.USER_ACCOUNT_INSUFFICIENT_BALANCE.getMsg());
     }
 
 }

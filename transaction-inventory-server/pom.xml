@@ -9,13 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>transaction-user-server</artifactId>
+    <artifactId>transaction-inventory-server</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <description>订单库存-SERVER</description>
 
     <dependencies>
         <dependency>
             <groupId>com.dream.start</groupId>
-            <artifactId>transaction-user-api</artifactId>
+            <artifactId>transaction-inventory-api</artifactId>
             <version>1.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
@@ -46,14 +48,15 @@
         </dependency>
 
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>

@@ -1,8 +1,5 @@
 server:
   port: 8100
-  security:
-    ignore:
-      urls: /actuator/**,/auth/oauth/token
 spring:
   application:
     name: TRANSACTION-GATEWAY-API
@@ -15,21 +12,6 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: oauth-server-route
-          uri: lb://transaction-auth-server
-          predicates:
-            - Path=/auth/**
-          filters:
-            - StripPrefix=1
-            - name: Hystrix
-              args:
-                name: fallbackcmd
-                fallbackUri: forward:/defaultFallback
-            - name: Retry
-              args:
-                retries: 1
-                statuses: BAD_GATEWAY,INTERNAL_SERVER_ERROR,SERVICE_UNAVAILABLE
-                methods: GET,POST
         - id: user-server-route
           uri: lb://transaction-user-server
           predicates:
@@ -48,12 +30,10 @@ spring:
               args:
                 name: fallbackcmd
                 fallbackUri: forward:/defaultFallback
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          #jwk-set-uri: http://localhost:8003/rsa/publicKey 暂无高可用方案，只能采用本地文件
-          public-key-location: classpath:publicKeyLocation.txt
+        - id: order-server-route
+          uri: lb://transaction-order-server
+          predicates:
+            - Path=/order/**
 
 # Eureka 注册中心
 eureka:
