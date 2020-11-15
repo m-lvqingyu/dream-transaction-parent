@@ -1,15 +1,21 @@
-package com.dream.seata.user.server.model;
+package com.dream.seata.user.server.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * @author 
- * 
+ * user_amount_info
+ *
+ * @author
  */
 @Data
-public class SysUserAmountInfo {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserAmountInfo {
     private Integer id;
 
     private String userUid;

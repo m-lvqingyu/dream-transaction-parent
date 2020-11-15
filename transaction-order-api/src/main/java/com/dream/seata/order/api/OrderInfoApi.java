@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RequestMapping("/order")
-@FeignClient(value = "TRANSACTION-ORDER-SERVER")
+@FeignClient(value = "transaction-order-server")
 public interface OrderInfoApi {
 
     /**
@@ -23,7 +23,7 @@ public interface OrderInfoApi {
      * @param orderId
      * @return
      */
-    @GetMapping("v1/getOrderInfo/{orderId}")
+    @GetMapping("v1/getOrderDetails/{orderId}")
     OrderInfoOutPut getOrderInfo(@PathVariable("orderId") String orderId);
 
     /**
@@ -32,6 +32,6 @@ public interface OrderInfoApi {
      * @param orderInfoInPut
      * @return
      */
-    @PostMapping("v1/createOrderInfo")
+    @PostMapping("v1/createOrder")
     Result createOrderInfo(@RequestBody OrderInfoInPut orderInfoInPut);
 }

@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @SpringBootApplication
-@MapperScan(basePackages = {"com.dream.seata.user.server.mapper"})
+@MapperScan(basePackages = {"com.dream.seata.user.server.dao"})
 public class UserServerApplication {
 
     public static void main(String[] args) {

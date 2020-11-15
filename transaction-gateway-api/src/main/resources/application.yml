@@ -2,7 +2,7 @@ server:
   port: 8100
 spring:
   application:
-    name: TRANSACTION-GATEWAY-API
+    name: transaction-gateway-api
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -15,7 +15,7 @@ spring:
         - id: user-server-route
           uri: lb://transaction-user-server
           predicates:
-            - Path=/sys/**
+            - Path=/user/**
             # 2020-10-22 21:00:00之后，将/sys/**请求路由至transaction-user-server服务
             #- After=2020-10-22T21:00:00.000+08:00
             # 2020-10-22 20:59:59之前，将/sys/**请求路由至transaction-user-server服务
@@ -25,7 +25,7 @@ spring:
             # Header存在名为payload，并且值为数字的/sys/**请求会被路由至transaction-user-server服务
             #- Header=payload,\d+
           filters:
-            - StripPrefix=1
+            #- StripPrefix=1
             - name: Hystrix
               args:
                 name: fallbackcmd
@@ -34,6 +34,11 @@ spring:
           uri: lb://transaction-order-server
           predicates:
             - Path=/order/**
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/defaultFallback
 
 # Eureka 注册中心
 eureka:

@@ -11,7 +11,8 @@ import com.dream.seata.order.api.output.OrderInfoOutPut;
 import com.dream.seata.order.server.entity.OrderInfo;
 import com.dream.seata.order.server.helper.OrderInfoHelper;
 import com.dream.seata.order.server.service.OrderInfoService;
-import com.dream.seata.user.api.SysUserInfoApi;
+import com.dream.seata.user.api.UserAmountInfoApi;
+import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +36,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Autowired
     private OrderInfoHelper orderInfoHelper;
     @Autowired
-    private SysUserInfoApi sysUserInfoApi;
+    private UserAmountInfoApi userAmountInfoApi;
     @Autowired
     private ProductInventoryApi productInventoryApi;
 
@@ -55,12 +56,17 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Override
     @GlobalTransactional
     public Result createOrderInfo(OrderInfoInPut orderInfoInPut) {
-        String userUid = orderInfoInPut.getUserUid();
         String productUid = orderInfoInPut.getProductUid();
         ProductInventoryInfoOutPut productInventoryInfo = productInventoryApi.findProductInventoryInfo(productUid);
         if (productInventoryInfo == null) {
-            log.warn("[创建订单]-根据商品ID:{}，未获取到商品库存信息！用户UID:{}", productUid, userUid);
+            log.warn("[创建订单]-根据商品ID:{}，未获取到商品库存信息！", productUid);
             return Result.custom(ResultCode.PRODUCT_INVENTORY_NOT_ENOUGH_ERROR);
+        }
+        String userUid = orderInfoInPut.getUserUid();
+        UserInfoAmountOutPut userInfoAmountOutPut = userAmountInfoApi.amountDetails(userUid);
+        if (userInfoAmountOutPut == null) {
+            log.warn("[创建订单]-根据用户ID:{}，未获取到用户账户信息！", userUid);
+            return Result.custom(ResultCode.USER_ACCOUNT_NOT_EXIST);
         }
         // 创建订单
         OrderInfo orderInfo = buildOrderInfo(orderInfoInPut);
@@ -68,12 +74,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         if (id <= 0) {
             return Result.custom(ResultCode.ORDER_CREATE_ERROR);
         }
+        Integer userAmountVersion = userInfoAmountOutPut.getVersion();
         // 扣减用户金额
-        sysUserInfoApi.userInfoSettlement(userUid, new BigDecimal("10"));
+        userAmountInfoApi.settlement(userUid, userAmountVersion, new BigDecimal("10"));
         // 扣减库存
-        Long version = productInventoryInfo.getVersion();
+        Long productVersion = productInventoryInfo.getVersion();
         Integer productNum = orderInfoInPut.getProductNum();
-        productInventoryApi.reductionProductInventory(productUid, productNum, version);
+        productInventoryApi.reductionProductInventory(productUid, productNum, productVersion);
         String orderUid = orderInfo.getOrderUid();
         return Result.success(orderUid);
     }

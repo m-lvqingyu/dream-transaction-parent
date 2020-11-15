@@ -1,11 +1,11 @@
-package com.dream.seata.user.server.model;
+package com.dream.seata.user.server.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SysUserAmountInfoExample {
+public class UserAmountInfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -16,7 +16,7 @@ public class SysUserAmountInfoExample {
 
     private Long offset;
 
-    public SysUserAmountInfoExample() {
+    public UserAmountInfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

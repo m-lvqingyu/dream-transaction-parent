@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableEurekaClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = {"com.dream.seata.user.api","com.dream.seata.inventory.api"})
+@EnableFeignClients(basePackages = {"com.dream.seata.user.api", "com.dream.seata.inventory.api"})
 @MapperScan(basePackages = {"com.dream.seata.order.server.dao"})
 public class OrderServerApplication {
 
