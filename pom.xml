@@ -45,7 +45,6 @@
         <seata.version>1.3.0</seata.version>
         <seata.cloud.version>2.2.0.RELEASE</seata.cloud.version>
         <apollo.version>1.7.0</apollo.version>
-        <sharding-sphere.version>4.1.0</sharding-sphere.version>
     </properties>
 
     <dependencyManagement>
@@ -147,24 +146,6 @@
                 <artifactId>apollo-client</artifactId>
                 <version>${apollo.version}</version>
             </dependency>
-
-            <!-- shardingsphere start -->
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-core</artifactId>
-                <version>${sharding-sphere.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-transaction-base-seata-at</artifactId>
-                <version>${sharding-sphere.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-                <version>${sharding-sphere.version}</version>
-            </dependency>
-            <!-- shardingsphere end -->
         </dependencies>
     </dependencyManagement>
 
