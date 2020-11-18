@@ -1,4 +1,4 @@
-package com.dream.seata.order.server.service;
+package com.dream.seata.order.server.service.at;
 
 import com.dream.seata.core.result.Result;
 import com.dream.seata.order.api.input.OrderInfoInPut;
@@ -7,7 +7,7 @@ import com.dream.seata.order.api.output.OrderInfoOutPut;
 /**
  * @author Lv.QingYu
  */
-public interface OrderInfoService {
+public interface OrderInfoForAtService {
 
     /**
      * 根据订单编号获取订单信息

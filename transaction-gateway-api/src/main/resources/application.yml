@@ -15,7 +15,7 @@ spring:
         - id: user-server-route
           uri: lb://transaction-user-server
           predicates:
-            - Path=/user/**
+            - Path=/outward/user/**
             # 2020-10-22 21:00:00之后，将/sys/**请求路由至transaction-user-server服务
             #- After=2020-10-22T21:00:00.000+08:00
             # 2020-10-22 20:59:59之前，将/sys/**请求路由至transaction-user-server服务
@@ -33,7 +33,7 @@ spring:
         - id: order-server-route
           uri: lb://transaction-order-server
           predicates:
-            - Path=/order/**
+            - Path=/outward/order/**
           filters:
             - name: Hystrix
               args:

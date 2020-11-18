@@ -1,12 +1,11 @@
-package com.dream.seata.inventory.server.service;
+package com.dream.seata.inventory.server.service.tcc;
 
 import com.dream.seata.core.result.Result;
-import com.dream.seata.inventory.api.output.ProductInventoryInfoOutPut;
 
 /**
  * @author Lv.QingYu
  */
-public interface ProductInventoryInfoService {
+public interface ProductInventoryInfoForTccService {
 
     /**
      * 根据商品ID与版本号，扣减库存
@@ -17,13 +16,4 @@ public interface ProductInventoryInfoService {
      * @return
      */
     Result reductionProductInventory(String productUid, Integer productNum, Long version);
-
-    /**
-     * 根据商品ID，获取商品库存信息
-     *
-     * @param productUid 商品ID
-     * @return
-     */
-    ProductInventoryInfoOutPut findProductInventoryInfo(String productUid);
-
 }

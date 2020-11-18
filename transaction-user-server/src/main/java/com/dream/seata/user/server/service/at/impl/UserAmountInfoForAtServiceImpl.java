@@ -1,4 +1,4 @@
-package com.dream.seata.user.server.service.impl;
+package com.dream.seata.user.server.service.at.impl;
 
 import com.dream.seata.core.exception.DreamCoreException;
 import com.dream.seata.core.result.Result;
@@ -6,7 +6,7 @@ import com.dream.seata.core.result.ResultCode;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import com.dream.seata.user.server.entity.UserAmountInfo;
 import com.dream.seata.user.server.helper.UserAmountInfoHelper;
-import com.dream.seata.user.server.service.UserAmountInfoService;
+import com.dream.seata.user.server.service.at.UserAmountInfoForAtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  */
 @Slf4j
 @Service
-public class UserAmountInfoServiceImpl implements UserAmountInfoService {
+public class UserAmountInfoForAtServiceImpl implements UserAmountInfoForAtService {
 
     @Autowired
     private UserAmountInfoHelper userAmountInfoHelper;
@@ -38,21 +38,7 @@ public class UserAmountInfoServiceImpl implements UserAmountInfoService {
 
     @Override
     public Result settlement(String userUid, Integer version, BigDecimal deductionAmount) {
-        UserAmountInfo userAmountInfo = userAmountInfoHelper.getUserAmountInfo(userUid);
-        if (userAmountInfo == null) {
-            log.warn("[扣减用户账户余额]-根据用户UID:{}未获取到用户账户信息", userUid);
-            throw new DreamCoreException(ResultCode.USER_ACCOUNT_NOT_EXIST);
-        }
-        BigDecimal mainAmount = userAmountInfo.getMainAmount();
-        if (mainAmount.compareTo(deductionAmount) < 0) {
-            log.warn("[扣减用户账户余额]-用户账户余额不足，用户UID:{}", userUid);
-            throw new DreamCoreException(ResultCode.USER_ACCOUNT_INSUFFICIENT_BALANCE);
-        }
-        BigDecimal amount = mainAmount.subtract(deductionAmount);
-        UserAmountInfo updateUserAmountInfo = new UserAmountInfo();
-        updateUserAmountInfo.setMainAmount(amount);
-        updateUserAmountInfo.setVersion(version + 1);
-        int result = userAmountInfoHelper.updateUserAmountInfo(userUid, version, updateUserAmountInfo);
+        int result = userAmountInfoHelper.settlement(userUid, deductionAmount, version);
         if (result <= 0) {
             throw new DreamCoreException(ResultCode.USER_ACCOUNT_UPDATE_ERROR);
         }

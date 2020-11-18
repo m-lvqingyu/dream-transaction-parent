@@ -1,4 +1,4 @@
-package com.dream.seata.order.server.service.impl;
+package com.dream.seata.order.server.service.at.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
@@ -10,7 +10,7 @@ import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
 import com.dream.seata.order.server.entity.OrderInfo;
 import com.dream.seata.order.server.helper.OrderInfoHelper;
-import com.dream.seata.order.server.service.OrderInfoService;
+import com.dream.seata.order.server.service.at.OrderInfoForAtService;
 import com.dream.seata.user.api.UserAmountInfoApi;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class OrderInfoServiceImpl implements OrderInfoService {
+public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
 
     @Autowired
     private OrderInfoHelper orderInfoHelper;
@@ -54,10 +54,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    @GlobalTransactional
+    @GlobalTransactional(name = "at-create-order", rollbackFor = Exception.class)
     public Result createOrderInfo(OrderInfoInPut orderInfoInPut) {
         String productUid = orderInfoInPut.getProductUid();
-        ProductInventoryInfoOutPut productInventoryInfo = productInventoryApi.findProductInventoryInfo(productUid);
+        ProductInventoryInfoOutPut productInventoryInfo = productInventoryApi.getInventoryDetails(productUid);
         if (productInventoryInfo == null) {
             log.warn("[创建订单]-根据商品ID:{}，未获取到商品库存信息！", productUid);
             return Result.custom(ResultCode.PRODUCT_INVENTORY_NOT_ENOUGH_ERROR);
@@ -70,17 +70,17 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         }
         // 创建订单
         OrderInfo orderInfo = buildOrderInfo(orderInfoInPut);
-        int id = orderInfoHelper.saveOrderInfo(orderInfo);
-        if (id <= 0) {
+        int orderId = orderInfoHelper.saveOrderInfo(orderInfo);
+        if (orderId <= 0) {
             return Result.custom(ResultCode.ORDER_CREATE_ERROR);
         }
         Integer userAmountVersion = userInfoAmountOutPut.getVersion();
         // 扣减用户金额
-        userAmountInfoApi.settlement(userUid, userAmountVersion, new BigDecimal("10"));
+        userAmountInfoApi.settlementForAt(userUid, userAmountVersion, new BigDecimal("10"));
         // 扣减库存
         Long productVersion = productInventoryInfo.getVersion();
         Integer productNum = orderInfoInPut.getProductNum();
-        productInventoryApi.reductionProductInventory(productUid, productNum, productVersion);
+        productInventoryApi.reductionForAt(productUid, productNum, productVersion);
         String orderUid = orderInfo.getOrderUid();
         return Result.success(orderUid);
     }

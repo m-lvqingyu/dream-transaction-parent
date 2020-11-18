@@ -3,6 +3,7 @@ package com.dream.seata.inventory.server.helper;
 import com.dream.seata.inventory.server.dao.ProductInventoryInfoMapper;
 import com.dream.seata.inventory.server.entity.ProductInventoryInfo;
 import com.dream.seata.inventory.server.entity.ProductInventoryInfoExample;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +27,7 @@ public class ProductInventoryInfoHelper {
      * @return
      */
     public int updateProductInventory(String productUid, Integer productNum, Long version) {
-        ProductInventoryInfoExample example = new ProductInventoryInfoExample();
-        ProductInventoryInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andProductUidEqualTo(productUid);
-        criteria.andVersionEqualTo(version);
+        ProductInventoryInfoExample example = buildExample(productUid, version);
         List<ProductInventoryInfo> infoList = productInventoryInfoMapper.selectByExample(example);
         if (infoList == null || infoList.isEmpty()) {
             return -9999;
@@ -40,19 +38,31 @@ public class ProductInventoryInfoHelper {
             return -9999;
         }
         Long lockNum = productInventoryInfo.getLockNum();
-
         ProductInventoryInfo updateProductInventoryInfo = new ProductInventoryInfo();
         updateProductInventoryInfo.setCurrentInventoryNum(currentInventoryNum - productNum);
         updateProductInventoryInfo.setLockNum(lockNum + productNum);
         updateProductInventoryInfo.setVersion(version + 1);
+        int result = productInventoryInfoMapper.updateByExampleSelective(updateProductInventoryInfo, example);
+        return result;
+    }
 
+    public int addProductInventory(String productUid, Integer productNum) {
+        ProductInventoryInfo productInventoryInfo = findProductInventoryInfo(productUid);
+        if (productInventoryInfo == null) {
+            return -9999;
+        }
+        long lockNum = productInventoryInfo.getLockNum();
+        long currentInventoryNum = productInventoryInfo.getCurrentInventoryNum();
+        ProductInventoryInfo updateProductInventoryInfo = new ProductInventoryInfo();
+        updateProductInventoryInfo.setLockNum(lockNum - productNum);
+        updateProductInventoryInfo.setCurrentInventoryNum(currentInventoryNum + productNum);
+        ProductInventoryInfoExample example = buildExample(productUid, null);
         int result = productInventoryInfoMapper.updateByExampleSelective(updateProductInventoryInfo, example);
         return result;
     }
 
     public ProductInventoryInfo findProductInventoryInfo(String productUid) {
-        ProductInventoryInfoExample example = new ProductInventoryInfoExample();
-        example.createCriteria().andProductUidEqualTo(productUid);
+        ProductInventoryInfoExample example = buildExample(productUid, null);
         List<ProductInventoryInfo> infoList = productInventoryInfoMapper.selectByExample(example);
         if (infoList == null || infoList.isEmpty()) {
             return null;
@@ -61,4 +71,15 @@ public class ProductInventoryInfoHelper {
         return productInventoryInfo;
     }
 
+    private ProductInventoryInfoExample buildExample(String productUid, Long version) {
+        ProductInventoryInfoExample example = new ProductInventoryInfoExample();
+        ProductInventoryInfoExample.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(productUid)) {
+            criteria.andProductUidEqualTo(productUid);
+        }
+        if (version != null) {
+            criteria.andVersionEqualTo(version);
+        }
+        return example;
+    }
 }

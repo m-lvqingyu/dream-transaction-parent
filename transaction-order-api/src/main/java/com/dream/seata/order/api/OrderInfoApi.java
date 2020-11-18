@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @create: 2020/10/06 22:37
  */
 
-@RequestMapping("/order")
+@RequestMapping(value = "/inward/order")
 @FeignClient(value = "transaction-order-server")
 public interface OrderInfoApi {
 
@@ -27,11 +27,20 @@ public interface OrderInfoApi {
     OrderInfoOutPut getOrderInfo(@PathVariable("orderId") String orderId);
 
     /**
-     * 创建订单，返回订单Id
+     * 创建订单，返回订单Id (分布式事务-XA模式)
      *
      * @param orderInfoInPut
      * @return
      */
-    @PostMapping("v1/createOrder")
-    Result createOrderInfo(@RequestBody OrderInfoInPut orderInfoInPut);
+    @PostMapping("v1/at/createOrder")
+    Result createOrderInfoForAt(@RequestBody OrderInfoInPut orderInfoInPut);
+
+    /**
+     * 创建订单，返回订单Id (分布式事务-TCC模式)
+     *
+     * @param orderInfoInPut
+     * @return
+     */
+    @PostMapping("v1/tcc/createOrder")
+    Result createOrderInfoForTcc(@RequestBody OrderInfoInPut orderInfoInPut);
 }

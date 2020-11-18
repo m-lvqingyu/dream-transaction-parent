@@ -71,7 +71,8 @@ public enum ResultCode implements IResultCode, Serializable {
 
     ORDER_CREATE_ERROR("D1000", "创建订单失败"),
 
-    PRODUCT_INVENTORY_NOT_ENOUGH_ERROR("E1000", "商品库存不足");
+    PRODUCT_INVENTORY_NOT_ENOUGH_ERROR("E1000", "商品库存不足"),
+    PRODUCT_INVENTORY_NOT_EXIST_ERROR("E1001", "商品库存信息不存在");
 
     @Override
     public String getCode() {

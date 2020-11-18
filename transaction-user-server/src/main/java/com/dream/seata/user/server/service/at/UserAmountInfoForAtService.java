@@ -1,4 +1,4 @@
-package com.dream.seata.user.server.service;
+package com.dream.seata.user.server.service.at;
 
 import com.dream.seata.core.result.Result;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 /**
  * @author Lv.QingYu
  */
-public interface UserAmountInfoService {
+public interface UserAmountInfoForAtService {
 
     /**
      * 根据UID，获取用户账户信息

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * @author Lv.QingYu
  */
-@RequestMapping("/user")
+@RequestMapping("/inward/user")
 @FeignClient(value = "transaction-user-server")
 public interface UserAmountInfoApi {
 
@@ -31,9 +31,22 @@ public interface UserAmountInfoApi {
      * @param deductionAmount 扣减金额
      * @return
      */
-    @PostMapping("v1/settlement")
-    Result settlement(@RequestParam("userUid") String userUid,
-                      @RequestParam("version") Integer version,
-                      @RequestParam("deductionAmount") BigDecimal deductionAmount);
+    @PostMapping("v1/settlementForAt")
+    Result settlementForAt(@RequestParam("userUid") String userUid,
+                           @RequestParam("version") Integer version,
+                           @RequestParam("deductionAmount") BigDecimal deductionAmount);
+
+    /**
+     * 订单结算，扣减账户金额
+     *
+     * @param userUid         用户唯一ID
+     * @param version         版本号
+     * @param deductionAmount 扣减金额
+     * @return
+     */
+    @PostMapping("v1/settlementForTcc")
+    Result settlementForTcc(@RequestParam("userUid") String userUid,
+                           @RequestParam("version") Integer version,
+                           @RequestParam("deductionAmount") BigDecimal deductionAmount);
 
 }

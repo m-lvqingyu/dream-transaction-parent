@@ -1,4 +1,4 @@
-package com.dream.seata.inventory.server.service.impl;
+package com.dream.seata.inventory.server.service.at.impl;
 
 import com.dream.seata.core.exception.DreamCoreException;
 import com.dream.seata.core.result.Result;
@@ -6,8 +6,7 @@ import com.dream.seata.core.result.ResultCode;
 import com.dream.seata.inventory.api.output.ProductInventoryInfoOutPut;
 import com.dream.seata.inventory.server.entity.ProductInventoryInfo;
 import com.dream.seata.inventory.server.helper.ProductInventoryInfoHelper;
-import com.dream.seata.inventory.server.service.ProductInventoryInfoService;
-import io.seata.spring.annotation.GlobalTransactional;
+import com.dream.seata.inventory.server.service.at.ProductInventoryInfoForAtService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +15,12 @@ import org.springframework.stereotype.Service;
  * @author Lv.QingYu
  */
 @Service
-public class ProductInventoryInfoServiceImpl implements ProductInventoryInfoService {
+public class ProductInventoryInfoForAtServiceImpl implements ProductInventoryInfoForAtService {
 
     @Autowired
     private ProductInventoryInfoHelper productInventoryInfoHelper;
 
     @Override
-    @GlobalTransactional
     public Result reductionProductInventory(String productUid, Integer productNum, Long version) {
         int result = productInventoryInfoHelper.updateProductInventory(productUid, productNum, version);
         if (result <= 0) {
