@@ -44,7 +44,7 @@ public enum ResultCode implements IResultCode, Serializable {
     SYSTEM_ORDER_PROCESSING_TIMEOUT("B0100", "系统订单处理超时"),
 
     SYSTEM_DISASTER_RECOVERY_TRIGGER("B0200", "系统容灾功能被出发"),
-    SYSTEM_LIMITING("B0210", "系统限流"),
+    SYSTEM_LIMITING("B0210", "系统已被限流，请稍后再试！"),
     SYSTEM_FUNCTION_DEGRADATION("B0220", "系统功能降级"),
 
     SYSTEM_RESOURCE_ERROR("B0300", "系统资源异常"),

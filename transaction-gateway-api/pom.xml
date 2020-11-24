@@ -19,7 +19,6 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
         <!--路由熔断 end-->
-
         <dependency>
             <groupId>com.dream.start</groupId>
             <artifactId>transaction-core</artifactId>
@@ -36,6 +35,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
         </dependency>
     </dependencies>
 
