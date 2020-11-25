@@ -45,6 +45,7 @@
         <seata.version>1.3.0</seata.version>
         <seata.cloud.version>2.2.0.RELEASE</seata.cloud.version>
         <apollo.version>1.7.0</apollo.version>
+        <sentinel.version>2.2.3.RELEASE</sentinel.version>
         <sentinel.gateway.version>1.8.0</sentinel.gateway.version>
     </properties>
 
@@ -74,6 +75,12 @@
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
                 <version>${sentinel.gateway.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-sentinel -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+                <version>${sentinel.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
             <dependency>

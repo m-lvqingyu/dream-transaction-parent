@@ -2,7 +2,6 @@ package com.dream.seata.user.api;
 
 import com.dream.seata.core.result.Result;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -11,7 +10,6 @@ import java.math.BigDecimal;
  * @author Lv.QingYu
  */
 @RequestMapping("/inward/user")
-@FeignClient(value = "transaction-user-server")
 public interface UserAmountInfoApi {
 
     /**
@@ -46,7 +44,7 @@ public interface UserAmountInfoApi {
      */
     @PostMapping("v1/settlementForTcc")
     Result settlementForTcc(@RequestParam("userUid") String userUid,
-                           @RequestParam("version") Integer version,
-                           @RequestParam("deductionAmount") BigDecimal deductionAmount);
+                            @RequestParam("version") Integer version,
+                            @RequestParam("deductionAmount") BigDecimal deductionAmount);
 
 }

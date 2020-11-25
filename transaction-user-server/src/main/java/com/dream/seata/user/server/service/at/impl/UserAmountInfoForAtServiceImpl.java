@@ -26,6 +26,9 @@ public class UserAmountInfoForAtServiceImpl implements UserAmountInfoForAtServic
 
     @Override
     public UserInfoAmountOutPut amountDetails(String userUid) {
+        if(userUid.equals("2")){
+            throw new RuntimeException("熔断测试....");
+        }
         UserAmountInfo userAmountInfo = userAmountInfoHelper.getUserAmountInfo(userUid);
         if (userAmountInfo == null) {
             log.warn("[获取用户账户信息]-根据用户UID:{}未获取到用户账户信息", userUid);

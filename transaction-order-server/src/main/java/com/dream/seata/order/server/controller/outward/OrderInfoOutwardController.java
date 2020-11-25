@@ -29,10 +29,6 @@ public class OrderInfoOutwardController {
 
     @PostMapping(value = "createOrderInfoForAt")
     public Result createOrderInfoForAt(@RequestBody OrderInfoInPut orderInfoInPut) throws InterruptedException {
-        Integer productNum = orderInfoInPut.getProductNum();
-        if(productNum != 1){
-            Thread.sleep(productNum * 1000);
-        }
         return orderInfoForAtService.createOrderInfo(orderInfoInPut);
     }
 

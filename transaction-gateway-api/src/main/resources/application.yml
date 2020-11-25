@@ -54,4 +54,4 @@ hystrix:
         isolation:
           thread:
             # 全局熔断器3s超时
-            timeoutInMilliseconds: 5000
+            timeoutInMilliseconds: 10000
