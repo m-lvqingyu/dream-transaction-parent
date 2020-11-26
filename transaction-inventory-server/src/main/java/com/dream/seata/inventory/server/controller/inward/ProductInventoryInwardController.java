@@ -27,7 +27,15 @@ public class ProductInventoryInwardController implements ProductInventoryApi {
 
     @Override
     public Result reductionForAt(String productUid, Integer productNum, Long version) {
-        return productInventoryInfoForAtService.reductionProductInventory(productUid, productNum, version);
+        Result result = productInventoryInfoForAtService.reductionProductInventory(productUid, productNum, version);
+        if(productNum == 10){
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     @Override

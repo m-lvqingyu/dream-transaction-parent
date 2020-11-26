@@ -1,5 +1,6 @@
 package com.dream.seata.user.server.entity;
 
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class UserAmountInfo {
 
     private BigDecimal frozenAmount;
 
+    @Version
     private Integer version;
 
     private Date createTime;

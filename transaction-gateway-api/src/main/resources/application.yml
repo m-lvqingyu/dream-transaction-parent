@@ -44,7 +44,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8001/eureka/
+      defaultZone: http://admin:admin-eureka@localhost:8081/eureka/
 
 # 超时配置
 hystrix:
@@ -54,4 +54,4 @@ hystrix:
         isolation:
           thread:
             # 全局熔断器3s超时
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 6000

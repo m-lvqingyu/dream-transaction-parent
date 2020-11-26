@@ -50,6 +50,7 @@
     </properties>
 
     <dependencyManagement>
+        <!-- Spring Cloud 版本依赖 -->
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

@@ -8,10 +8,10 @@ import com.dream.seata.inventory.api.ProductInventoryApi;
 import com.dream.seata.inventory.api.output.ProductInventoryInfoOutPut;
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.api.output.OrderInfoOutPut;
-import com.dream.seata.order.server.client.UserAmountInfoClient;
 import com.dream.seata.order.server.entity.OrderInfo;
 import com.dream.seata.order.server.helper.OrderInfoHelper;
 import com.dream.seata.order.server.service.at.OrderInfoForAtService;
+import com.dream.seata.user.api.UserAmountInfoApi;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
     @Autowired
     private OrderInfoHelper orderInfoHelper;
     @Autowired
-    private UserAmountInfoClient userAmountInfoClient;
+    private UserAmountInfoApi userAmountInfoApi;
     @Autowired
     private ProductInventoryApi productInventoryApi;
 
@@ -63,7 +63,7 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
             return Result.custom(ResultCode.PRODUCT_INVENTORY_NOT_ENOUGH_ERROR);
         }
         String userUid = orderInfoInPut.getUserUid();
-        UserInfoAmountOutPut userInfoAmountOutPut = userAmountInfoClient.amountDetails(userUid);
+        UserInfoAmountOutPut userInfoAmountOutPut = userAmountInfoApi.amountDetails(userUid);
         if (userInfoAmountOutPut == null) {
             log.warn("[创建订单]-根据用户ID:{}，未获取到用户账户信息！", userUid);
             return Result.custom(ResultCode.USER_ACCOUNT_NOT_EXIST);
@@ -76,11 +76,20 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
         }
         Integer userAmountVersion = userInfoAmountOutPut.getVersion();
         // 扣减用户金额
-        userAmountInfoClient.settlementForAt(userUid, userAmountVersion, new BigDecimal("10"));
+        Integer productNum = orderInfoInPut.getProductNum();
+        if(productNum == 2){
+            throw new RuntimeException("分布式事务-扣款异常测试");
+        }
+        userAmountInfoApi.settlementForAt(userUid, userAmountVersion, new BigDecimal("10"));
         // 扣减库存
         Long productVersion = productInventoryInfo.getVersion();
-        Integer productNum = orderInfoInPut.getProductNum();
+        if(productNum == 3){
+            throw new RuntimeException("分布式事务-扣减库存异常测试");
+        }
         productInventoryApi.reductionForAt(productUid, productNum, productVersion);
+        if(productNum == 4){
+            throw new RuntimeException("分布式事务-创建订单异常测试");
+        }
         String orderUid = orderInfo.getOrderUid();
         return Result.success(orderUid);
     }

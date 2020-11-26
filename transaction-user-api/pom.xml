@@ -11,7 +11,7 @@
 
     <artifactId>transaction-user-api</artifactId>
     <packaging>jar</packaging>
-    
+
     <dependencies>
         <dependency>
             <groupId>com.dream.start</groupId>
@@ -22,6 +22,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 </project>
