@@ -26,7 +26,7 @@ public class ProductInventoryInwardController implements ProductInventoryApi {
     }
 
     @Override
-    public Result reductionForAt(String productUid, Integer productNum, Long version) {
+    public Result reductionForAt(String productUid, Long productNum, Long version) {
         Result result = productInventoryInfoForAtService.reductionProductInventory(productUid, productNum, version);
         if(productNum == 10){
             try {
@@ -39,7 +39,7 @@ public class ProductInventoryInwardController implements ProductInventoryApi {
     }
 
     @Override
-    public Result reductionForTcc(String productUid, Integer productNum, Long version) {
+    public Result reductionForTcc(String productUid, Long productNum, Long version) {
         return productInventoryInfoForTccService.reductionProductInventory(productUid, productNum, version);
     }
 

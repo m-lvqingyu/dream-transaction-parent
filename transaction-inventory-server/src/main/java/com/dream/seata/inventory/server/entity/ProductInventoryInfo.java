@@ -23,12 +23,17 @@ public class ProductInventoryInfo {
     private String productUid;
 
     /**
-     * 商品数量
+     * 商品库存数量
      */
-    private Long currentInventoryNum;
+    private Long currentNum;
 
     /**
-     * 已售商品数量
+     * 已销售数量
+     */
+    private Long soldNum;
+
+    /**
+     * 已锁定数量
      */
     private Long lockNum;
 

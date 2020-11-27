@@ -26,5 +26,5 @@ public interface UserAmountInfoForAtService {
      * @param deductionAmount 扣减金额
      * @return
      */
-    Result settlement(String userUid, Integer version, BigDecimal deductionAmount);
+    Result settlement(String userUid, Long version, BigDecimal deductionAmount);
 }

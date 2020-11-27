@@ -24,5 +24,5 @@ public class UserInfoAmountOutPut {
 
     private BigDecimal frozenAmount;
 
-    private Integer version;
+    private Long version;
 }

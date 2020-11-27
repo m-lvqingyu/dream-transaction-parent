@@ -23,7 +23,7 @@ public interface ProductInventoryTccAction {
     @TwoPhaseBusinessAction(name = "reductionProductInventory", rollbackMethod = "rollback", commitMethod = "commit")
     boolean prepareReductionProductInventory(BusinessActionContext businessActionContext,
                                              @BusinessActionContextParameter(paramName = "productUid") String productUid,
-                                             @BusinessActionContextParameter(paramName = "productNum") Integer productNum,
+                                             @BusinessActionContextParameter(paramName = "productNum") Long productNum,
                                              @BusinessActionContextParameter(paramName = "version") Long version);
 
     /**

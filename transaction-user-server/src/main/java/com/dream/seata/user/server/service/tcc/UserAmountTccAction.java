@@ -25,7 +25,7 @@ public interface UserAmountTccAction {
     @TwoPhaseBusinessAction(name = "userSettlement", commitMethod = "commit", rollbackMethod = "rollback")
     boolean prepareSettlement(BusinessActionContext businessActionContext,
                               @BusinessActionContextParameter(paramName = "userUid") String userUid,
-                              @BusinessActionContextParameter(paramName = "version") Integer version,
+                              @BusinessActionContextParameter(paramName = "version") Long version,
                               @BusinessActionContextParameter(paramName = "deductionAmount") BigDecimal deductionAmount);
 
     /**

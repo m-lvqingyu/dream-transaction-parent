@@ -1,6 +1,7 @@
 package com.dream.seata.user.api.fallback;
 
 import com.dream.seata.core.result.Result;
+import com.dream.seata.core.result.ResultCode;
 import com.dream.seata.user.api.UserAmountInfoApi;
 import com.dream.seata.user.api.output.UserInfoAmountOutPut;
 import com.google.common.base.Throwables;
@@ -27,15 +28,15 @@ public class UserAmountInfoFallbackFactory implements FallbackFactory<UserAmount
             }
 
             @Override
-            public Result settlementForAt(String userUid, Integer version, BigDecimal deductionAmount) {
+            public Result settlementForAt(String userUid, Long version, BigDecimal deductionAmount) {
                 log.error("[服务降级]-[扣款接口]-[AT模式]-UserUid:{},ex:{}", userUid, Throwables.getStackTraceAsString(throwable));
-                return null;
+                return Result.custom(ResultCode.CALL_THIRD_PARTY_SERVICE_ERROR);
             }
 
             @Override
-            public Result settlementForTcc(String userUid, Integer version, BigDecimal deductionAmount) {
+            public Result settlementForTcc(String userUid, Long version, BigDecimal deductionAmount) {
                 log.error("[服务降级]-[扣款接口]-[TCC模式]-UserUid:{},ex:{}", userUid, Throwables.getStackTraceAsString(throwable));
-                return null;
+                return Result.custom(ResultCode.CALL_THIRD_PARTY_SERVICE_ERROR);
             }
         };
     }

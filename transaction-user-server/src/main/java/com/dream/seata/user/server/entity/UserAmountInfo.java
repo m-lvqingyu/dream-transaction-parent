@@ -17,18 +17,33 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAmountInfo {
-    private Integer id;
+    private Long id;
 
+    /**
+     * 用户唯一ID
+     */
     private String userUid;
 
+    /**
+     * 主账户金额
+     */
     private BigDecimal mainAmount;
 
+    /**
+     * 子账户金额
+     */
     private BigDecimal subAmount;
 
+    /**
+     * 冻结金额
+     */
     private BigDecimal frozenAmount;
 
+    /**
+     * 版本编号
+     */
     @Version
-    private Integer version;
+    private Long version;
 
     private Date createTime;
 

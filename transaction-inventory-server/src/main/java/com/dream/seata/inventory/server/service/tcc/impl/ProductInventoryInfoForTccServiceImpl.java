@@ -19,14 +19,8 @@ public class ProductInventoryInfoForTccServiceImpl implements ProductInventoryIn
 
     @GlobalTransactional
     @Override
-    public Result reductionProductInventory(String productUid, Integer productNum, Long version) {
-        /*if(productNum == 2){
-            throw new RuntimeException("分布式事务-Tcc模式测试");
-        }*/
+    public Result reductionProductInventory(String productUid, Long productNum, Long version) {
         productInventoryTccAction.prepareReductionProductInventory(null, productUid, productNum, version);
-        /*if(productNum == 3){
-            throw new RuntimeException("分布式事务-Tcc模式测试");
-        }*/
         return Result.success();
     }
 }

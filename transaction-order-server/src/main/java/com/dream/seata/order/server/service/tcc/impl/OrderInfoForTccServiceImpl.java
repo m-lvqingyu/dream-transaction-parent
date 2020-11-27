@@ -40,8 +40,8 @@ public class OrderInfoForTccServiceImpl implements OrderInfoForTccService {
             log.info("[分布式事务]-[创建订单]-根据商品ID:{}未获取到商品库存信息", productUid);
             return Result.custom(ResultCode.PRODUCT_INVENTORY_NOT_EXIST_ERROR);
         }
-        int productNum = orderInfoInPut.getProductNum();
-        long currentInventoryNum = inventoryDetails.getCurrentInventoryNum();
+        long productNum = orderInfoInPut.getProductNum();
+        long currentInventoryNum = inventoryDetails.getCurrentNum();
         if (productNum > currentInventoryNum) {
             log.info("[分布式事务]-[创建订单]-商品ID:{}，库存不足", productUid);
             return Result.custom(ResultCode.PRODUCT_INVENTORY_NOT_ENOUGH_ERROR);
@@ -63,11 +63,16 @@ public class OrderInfoForTccServiceImpl implements OrderInfoForTccService {
         orderInfoTccAction.prepareCreateOrder(null, userUid, recipientUid, productUid);
         // 更新库存
         Long productInventoryVersion = inventoryDetails.getVersion();
-        productInventoryApi.reductionForTcc(productUid, productNum, productInventoryVersion);
+        Result reductionResult = productInventoryApi.reductionForTcc(productUid, productNum, productInventoryVersion);
+        if(reductionResult == null || !reductionResult.getCode().equals(ResultCode.SUCCESS.getCode())){
+            throw new RuntimeException("分布式事务-Tcc模式测试");
+        }
         // 更新账户余额
-        Integer userInfoAmountVersion = userInfoAmountOutPut.getVersion();
-        userAmountInfoApi.settlementForTcc(userUid, userInfoAmountVersion, productAmount);
-
+        Long userInfoAmountVersion = userInfoAmountOutPut.getVersion();
+        Result settlementResult = userAmountInfoApi.settlementForTcc(userUid, userInfoAmountVersion, productAmount);
+        if(settlementResult == null || !settlementResult.getCode().equals(ResultCode.SUCCESS.getCode())){
+            throw new RuntimeException("分布式事务-Tcc模式测试");
+        }
         return Result.success();
     }
 

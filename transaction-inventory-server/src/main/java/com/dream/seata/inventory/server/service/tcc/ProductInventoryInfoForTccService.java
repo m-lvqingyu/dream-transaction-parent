@@ -15,5 +15,5 @@ public interface ProductInventoryInfoForTccService {
      * @param version    版本号
      * @return
      */
-    Result reductionProductInventory(String productUid, Integer productNum, Long version);
+    Result reductionProductInventory(String productUid, Long productNum, Long version);
 }

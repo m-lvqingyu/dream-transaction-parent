@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @description FeignClient如果加了FallbackFactory，那业务出现异常的时候，进入降级逻辑了,异常会被上游服务捕获，此时，@GlobalTransactional会认为你的流程是正常的，就不会回滚了
  */
 @RequestMapping("/inward/inventory")
-@FeignClient(value = "transaction-inventory-server")
-//@FeignClient(value = "transaction-inventory-server", fallbackFactory = ProductInventoryFallbackFactory.class)
+@FeignClient(value = "transaction-inventory-server", fallbackFactory = ProductInventoryFallbackFactory.class)
 public interface ProductInventoryApi {
 
     /**
@@ -36,7 +35,7 @@ public interface ProductInventoryApi {
      */
     @PostMapping("v1/reductionForAt")
     Result reductionForAt(@RequestParam("productUid") String productUid,
-                          @RequestParam("productNum") Integer productNum,
+                          @RequestParam("productNum") Long productNum,
                           @RequestParam("version") Long version);
 
     /**
@@ -49,7 +48,7 @@ public interface ProductInventoryApi {
      */
     @PostMapping("v1/reductionForTcc")
     Result reductionForTcc(@RequestParam("productUid") String productUid,
-                           @RequestParam("productNum") Integer productNum,
+                           @RequestParam("productNum") Long productNum,
                            @RequestParam("version") Long version);
 
 

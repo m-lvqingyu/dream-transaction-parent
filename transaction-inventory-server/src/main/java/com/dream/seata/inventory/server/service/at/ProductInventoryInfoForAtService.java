@@ -16,7 +16,7 @@ public interface ProductInventoryInfoForAtService {
      * @param version    版本号
      * @return
      */
-    Result reductionProductInventory(String productUid, Integer productNum, Long version);
+    Result reductionProductInventory(String productUid, Long productNum, Long version);
 
     /**
      * 根据商品ID，获取商品库存信息

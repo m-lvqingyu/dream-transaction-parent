@@ -21,7 +21,7 @@ public class UserAmountInfoForTccServiceImpl implements UserAmountInfoForTccServ
 
     @GlobalTransactional
     @Override
-    public Result settlement(String userUid, Integer version, BigDecimal deductionAmount) {
+    public Result settlement(String userUid, Long version, BigDecimal deductionAmount) {
         if(deductionAmount.compareTo(new BigDecimal(20)) == 0){
             throw new RuntimeException("分布式事务Tcc模式测试");
         }

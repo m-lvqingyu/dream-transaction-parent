@@ -18,12 +18,18 @@ public class ProductInventoryInfoOutPut {
     private String productUid;
 
     /**
-     * 商品数量
+     * 商品库存数量
      */
-    private Long currentInventoryNum;
+    private Long currentNum;
 
     /**
      * 已售商品数量
+     */
+
+    private Long soldNum;
+
+    /**
+     * 已锁定商品数量
      */
     private Long lockNum;
 

@@ -2,12 +2,15 @@ package com.dream.seata.order.server.helper;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.server.dao.OrderInfoMapper;
 import com.dream.seata.order.server.entity.OrderInfo;
 import com.dream.seata.order.server.entity.OrderInfoExample;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +38,17 @@ public class OrderInfoHelper {
         OrderInfoExample example = new OrderInfoExample();
         example.createCriteria().andOrderUidEqualTo(orderUid);
         return orderInfoMapper.deleteByExample(example);
+    }
+
+    public OrderInfo buildOrderInfo(OrderInfoInPut orderInfoInPut) {
+        OrderInfo orderInfo = new OrderInfo();
+        BeanUtils.copyProperties(orderInfoInPut, orderInfo);
+        String orderUid =  findOrderUid();
+        orderInfo.setOrderUid(orderUid);
+        Date currentTime = new Date();
+        orderInfo.setCreateTime(currentTime);
+        orderInfo.setUpdateTime(currentTime);
+        return orderInfo;
     }
 
     public String findOrderUid() {

@@ -1,6 +1,7 @@
 package com.dream.seata.inventory.api.fallback;
 
 import com.dream.seata.core.result.Result;
+import com.dream.seata.core.result.ResultCode;
 import com.dream.seata.inventory.api.ProductInventoryApi;
 import com.dream.seata.inventory.api.output.ProductInventoryInfoOutPut;
 import com.google.common.base.Throwables;
@@ -24,15 +25,15 @@ public class ProductInventoryFallbackFactory implements FallbackFactory<ProductI
             }
 
             @Override
-            public Result reductionForAt(String productUid, Integer productNum, Long version) {
+            public Result reductionForAt(String productUid, Long productNum, Long version) {
                 log.error("[服务降级]-[AT模式]-[扣减库存接口]-productUid:{},ex:{}", productUid, Throwables.getStackTraceAsString(throwable));
-                return null;
+                return Result.custom(ResultCode.CALL_THIRD_PARTY_SERVICE_ERROR);
             }
 
             @Override
-            public Result reductionForTcc(String productUid, Integer productNum, Long version) {
+            public Result reductionForTcc(String productUid, Long productNum, Long version) {
                 log.error("[服务降级]-[TCC模式]-[扣减库存接口]-productUid:{},ex:{}", productUid, Throwables.getStackTraceAsString(throwable));
-                return null;
+                return Result.custom(ResultCode.CALL_THIRD_PARTY_SERVICE_ERROR);
             }
         };
     }

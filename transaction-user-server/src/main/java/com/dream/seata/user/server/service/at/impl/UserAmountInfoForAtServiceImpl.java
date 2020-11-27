@@ -26,9 +26,6 @@ public class UserAmountInfoForAtServiceImpl implements UserAmountInfoForAtServic
 
     @Override
     public UserInfoAmountOutPut amountDetails(String userUid) {
-        if(userUid.equals("2")){
-            throw new RuntimeException("熔断测试....");
-        }
         UserAmountInfo userAmountInfo = userAmountInfoHelper.getUserAmountInfo(userUid);
         if (userAmountInfo == null) {
             log.warn("[获取用户账户信息]-根据用户UID:{}未获取到用户账户信息", userUid);
@@ -40,8 +37,8 @@ public class UserAmountInfoForAtServiceImpl implements UserAmountInfoForAtServic
     }
 
     @Override
-    public Result settlement(String userUid, Integer version, BigDecimal deductionAmount) {
-        int result = userAmountInfoHelper.settlement(userUid, deductionAmount, version);
+    public Result settlement(String userUid, Long version, BigDecimal deductionAmount) {
+        int result = userAmountInfoHelper.deductionMainAmount(userUid, version, deductionAmount);
         if (result <= 0) {
             throw new DreamCoreException(ResultCode.USER_ACCOUNT_UPDATE_ERROR);
         }

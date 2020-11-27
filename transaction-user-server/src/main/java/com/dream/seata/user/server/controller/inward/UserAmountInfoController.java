@@ -28,12 +28,12 @@ public class UserAmountInfoController implements UserAmountInfoApi {
     }
 
     @Override
-    public Result settlementForAt(String userUid, Integer version, BigDecimal deductionAmount) {
+    public Result settlementForAt(String userUid, Long version, BigDecimal deductionAmount) {
         return userAmountInfoForAtService.settlement(userUid, version, deductionAmount);
     }
 
     @Override
-    public Result settlementForTcc(String userUid, Integer version, BigDecimal deductionAmount) {
+    public Result settlementForTcc(String userUid, Long version, BigDecimal deductionAmount) {
         return userAmountInfoForTccService.settlement(userUid, version, deductionAmount);
     }
 

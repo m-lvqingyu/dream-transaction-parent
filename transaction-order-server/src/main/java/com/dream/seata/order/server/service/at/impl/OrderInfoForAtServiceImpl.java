@@ -54,7 +54,7 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
     }
 
     @Override
-    @GlobalTransactional(name = "at-create-order", rollbackFor = Exception.class)
+    @GlobalTransactional(name = "at-create-order", rollbackFor = Exception.class, timeoutMills = 6000)
     public Result createOrderInfo(OrderInfoInPut orderInfoInPut) {
         String productUid = orderInfoInPut.getProductUid();
         ProductInventoryInfoOutPut productInventoryInfo = productInventoryApi.getInventoryDetails(productUid);
@@ -69,24 +69,29 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
             return Result.custom(ResultCode.USER_ACCOUNT_NOT_EXIST);
         }
         // 创建订单
-        OrderInfo orderInfo = buildOrderInfo(orderInfoInPut);
-        int orderId = orderInfoHelper.saveOrderInfo(orderInfo);
-        if (orderId <= 0) {
-            return Result.custom(ResultCode.ORDER_CREATE_ERROR);
-        }
-        Integer userAmountVersion = userInfoAmountOutPut.getVersion();
-        // 扣减用户金额
-        Integer productNum = orderInfoInPut.getProductNum();
+        OrderInfo orderInfo = orderInfoHelper.buildOrderInfo(orderInfoInPut);
+        orderInfoHelper.saveOrderInfo(orderInfo);
+        long productNum = orderInfoInPut.getProductNum();
         if(productNum == 2){
-            throw new RuntimeException("分布式事务-扣款异常测试");
+            throw new RuntimeException("分布式事务-创建订单异常");
         }
-        userAmountInfoApi.settlementForAt(userUid, userAmountVersion, new BigDecimal("10"));
+
+        // 扣减用户金额
+        Long userAmountVersion = userInfoAmountOutPut.getVersion();
+        Result settlementResult = userAmountInfoApi.settlementForAt(userUid, userAmountVersion, new BigDecimal("10"));
+        if(settlementResult == null || !settlementResult.getCode().equals(ResultCode.SUCCESS.getCode())){
+            throw new RuntimeException("分布式事务-用户扣款异常");
+        }
+        if(productNum == 3){
+            throw new RuntimeException("分布式事务-用户扣款异常");
+        }
         // 扣减库存
         Long productVersion = productInventoryInfo.getVersion();
-        if(productNum == 3){
-            throw new RuntimeException("分布式事务-扣减库存异常测试");
+        // 扣减商品库存接口存在降级处理逻辑，异常被捕获，下游服务没有抛出，所以事务并不会回滚。这里就需要针对接口返回结果进行解析,如果返回不正确，则抛出异常
+        Result reductionResult = productInventoryApi.reductionForAt(productUid, productNum, productVersion);
+        if(reductionResult == null || !reductionResult.getCode().equals(ResultCode.SUCCESS.getCode())){
+            throw new RuntimeException("分布式事务-库存扣减异常");
         }
-        productInventoryApi.reductionForAt(productUid, productNum, productVersion);
         if(productNum == 4){
             throw new RuntimeException("分布式事务-创建订单异常测试");
         }
@@ -94,23 +99,4 @@ public class OrderInfoForAtServiceImpl implements OrderInfoForAtService {
         return Result.success(orderUid);
     }
 
-    private OrderInfo buildOrderInfo(OrderInfoInPut orderInfoInPut) {
-        OrderInfo orderInfo = new OrderInfo();
-        BeanUtils.copyProperties(orderInfoInPut, orderInfo);
-        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
-        long nextId = snowflake.nextId();
-        String orderUid = String.valueOf(nextId);
-        orderInfo.setOrderUid(orderUid);
-        Date currentTime = new Date();
-        orderInfo.setCreateTime(currentTime);
-        orderInfo.setUpdateTime(currentTime);
-        return orderInfo;
-    }
-
-    public static void main(String[] args) {
-        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
-        long nextId = snowflake.nextId();
-        System.out.println(nextId);
-
-    }
 }
