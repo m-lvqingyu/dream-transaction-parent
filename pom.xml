@@ -24,6 +24,8 @@
         <module>transaction-core</module>
         <module>transaction-inventory-server</module>
         <module>transaction-inventory-api</module>
+        <module>transaction-sharding-sphere</module>
+        <module>transaction-code-generator</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -33,6 +35,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <druid.version>1.2.3</druid.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <spring.mybatis>2.1.2</spring.mybatis>
         <mysql.version>8.0.20</mysql.version>
         <lombok.version>1.18.12</lombok.version>
         <commons.lang3.version>3.11</commons.lang3.version>
@@ -94,6 +97,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring.mybatis}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
             <dependency>
