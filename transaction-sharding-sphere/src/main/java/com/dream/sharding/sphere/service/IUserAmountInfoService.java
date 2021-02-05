@@ -1,16 +1,19 @@
 package com.dream.sharding.sphere.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.dream.sharding.sphere.entity.UserAmountInfo;
+import com.dream.sharding.sphere.vo.UserAmountInfoVO;
 
 /**
- * <p>
- * 服务类
- * </p>
- *
  * @author Lv.QingYu
  * @since 2021-02-01
  */
-public interface IUserAmountInfoService extends IService<UserAmountInfo> {
+public interface IUserAmountInfoService {
+
+    /**
+     * 根据ID获取用户账户信息
+     *
+     * @param Id
+     * @return
+     */
+    UserAmountInfoVO getUserAmountById(Long Id);
 
 }

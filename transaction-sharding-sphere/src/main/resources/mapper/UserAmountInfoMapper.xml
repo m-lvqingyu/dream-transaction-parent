@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dream.sharding.sphere.mapper.UserAmountInfoMapper">
+    <resultMap id="BaseResult" type="com.dream.sharding.sphere.entity.UserAmountInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_uid" jdbcType="VARCHAR" property="userUid"/>
+        <result column="main_amount" jdbcType="DECIMAL" property="mainAmount"/>
+        <result column="sub_amount" jdbcType="DECIMAL" property="subAmount"/>
+        <result column="frozen_amount" jdbcType="DECIMAL" property="frozenAmount"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_uid, main_amount, sub_amount, frozen_amount, version
+    </sql>
+
+    <select id="getUserAmountInfoById" resultType="com.dream.sharding.sphere.entity.UserAmountInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_amount_info where id = #{id}
+    </select>
+
+    <insert id="insertUserAmount">
+        insert into user_amount_info (user_uid, main_amount, sub_amount, frozen_amount, version, update_time) values (#{userUid}, 0, 0, 0, 1, #{updateTime});
+    </insert>
 
 </mapper>

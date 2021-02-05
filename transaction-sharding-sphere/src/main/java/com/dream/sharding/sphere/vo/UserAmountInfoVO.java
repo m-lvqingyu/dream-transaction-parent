@@ -1,24 +1,16 @@
-package com.dream.sharding.sphere.entity;
+package com.dream.sharding.sphere.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
- * <p>
- * 用户账户信息
- * </p>
- *
  * @author Lv.QingYu
- * @since 2021-02-01
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserAmountInfo {
-
-    private Long id;
+public class UserAmountInfoVO {
 
     /**
      * 用户唯一ID
@@ -44,7 +36,5 @@ public class UserAmountInfo {
      * 版本编号
      */
     private Long version;
-
-    private Date updateTime;
 
 }

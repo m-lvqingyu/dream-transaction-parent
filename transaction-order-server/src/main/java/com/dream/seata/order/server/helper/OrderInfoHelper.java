@@ -1,7 +1,6 @@
 package com.dream.seata.order.server.helper;
 
-import cn.hutool.core.lang.Snowflake;
-import cn.hutool.core.util.IdUtil;
+import com.dream.seata.core.utils.ServerUidUtils;
 import com.dream.seata.order.api.input.OrderInfoInPut;
 import com.dream.seata.order.server.dao.OrderInfoMapper;
 import com.dream.seata.order.server.entity.OrderInfo;
@@ -43,7 +42,7 @@ public class OrderInfoHelper {
     public OrderInfo buildOrderInfo(OrderInfoInPut orderInfoInPut) {
         OrderInfo orderInfo = new OrderInfo();
         BeanUtils.copyProperties(orderInfoInPut, orderInfo);
-        String orderUid =  findOrderUid();
+        String orderUid = findOrderUid();
         orderInfo.setOrderUid(orderUid);
         Date currentTime = new Date();
         orderInfo.setCreateTime(currentTime);
@@ -52,9 +51,7 @@ public class OrderInfoHelper {
     }
 
     public String findOrderUid() {
-        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
-        long nextId = snowflake.nextId();
-        String orderUid = String.valueOf(nextId);
+        String orderUid = ServerUidUtils.findUid(1, 1);
         return orderUid;
     }
 
